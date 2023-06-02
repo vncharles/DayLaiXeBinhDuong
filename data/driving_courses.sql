@@ -241,7 +241,7 @@ CREATE TABLE `slide` (
   `image` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +250,7 @@ CREATE TABLE `slide` (
 
 LOCK TABLES `slide` WRITE;
 /*!40000 ALTER TABLE `slide` DISABLE KEYS */;
-INSERT INTO `slide` VALUES (1,NULL,NULL,'Test1','image1.png','test1');
+INSERT INTO `slide` VALUES (1,NULL,NULL,'Test1','image1.png','test1'),(2,NULL,NULL,'Test2','image2.jpg','test2');
 /*!40000 ALTER TABLE `slide` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,4 +319,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-02 19:47:12
+-- Dump completed on 2023-06-02 23:04:35
