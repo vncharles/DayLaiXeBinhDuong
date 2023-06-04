@@ -7,6 +7,8 @@ import com.charles.website.repository.FollowRepository;
 import com.charles.website.services.FollowService;
 import com.charles.website.utils.Authen;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +22,9 @@ public class FollowServiceImpl implements FollowService {
     private FollowRepository followRepository;
 
     @Override
-    public List<Follow> listFollowPerson() {
+    public Page<Follow> listFollowPerson(Pageable pageable) {
         Account account = accountRepository.findByUsername(Authen.username());
 
-        return followRepository.findAllByStudent(account.getStudent().getId());
+        return followRepository.findAllByStudent(account.getStudent().getId(), pageable);
     }
 }

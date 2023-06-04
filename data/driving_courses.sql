@@ -65,6 +65,7 @@ CREATE TABLE `certificate` (
   `total_kmdat` int NOT NULL,
   `degree_id` bigint NOT NULL,
   `student_id` bigint NOT NULL,
+  `status` bit(1) NOT NULL,
   PRIMARY KEY (`degree_id`,`student_id`),
   KEY `FKknbfl2vklnrw009fdrpgo1axf` (`student_id`),
   CONSTRAINT `FK79tye2nsqmh8kipjbrj8sn4f5` FOREIGN KEY (`degree_id`) REFERENCES `degree` (`id`),
@@ -78,6 +79,7 @@ CREATE TABLE `certificate` (
 
 LOCK TABLES `certificate` WRITE;
 /*!40000 ALTER TABLE `certificate` DISABLE KEYS */;
+INSERT INTO `certificate` VALUES ('2023-06-04 00:00:00',20.5,200,2,1,_binary '\0');
 /*!40000 ALTER TABLE `certificate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,6 +178,7 @@ CREATE TABLE `follow` (
 
 LOCK TABLES `follow` WRITE;
 /*!40000 ALTER TABLE `follow` DISABLE KEYS */;
+INSERT INTO `follow` VALUES (5.5,'Lai xe',6.5,100,5.4,'NO',9,'Luan',9,1,1),(6.5,'Lai xe',5.4,200,6,'No',8,'Thanh',7,2,1);
 /*!40000 ALTER TABLE `follow` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,4 +330,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-04 12:50:52
+-- Dump completed on 2023-06-04 15:40:59

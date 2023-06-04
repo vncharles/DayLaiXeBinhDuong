@@ -19,5 +19,6 @@ public class Certificate {
     private Date finishDay;
     private int totalKmDAT;
     private double totalHoursRunning;
+    private boolean status;
 
 }

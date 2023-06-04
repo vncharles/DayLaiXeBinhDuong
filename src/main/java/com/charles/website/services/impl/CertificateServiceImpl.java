@@ -7,6 +7,8 @@ import com.charles.website.repository.CertificateRepository;
 import com.charles.website.services.CertificateService;
 import com.charles.website.utils.Authen;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +22,9 @@ public class CertificateServiceImpl implements CertificateService {
     private CertificateRepository certificateRepository;
 
     @Override
-    public List<Certificate> listCertificatePerson() {
+    public Page<Certificate> listCertificatePerson(Pageable pageable) {
         Account account = accountRepository.findByUsername(Authen.username());
 
-        return certificateRepository.findAllByStudent(account.getStudent().getId());
+        return certificateRepository.findAllByStudent(account.getStudent().getId(), pageable);
     }
 }
