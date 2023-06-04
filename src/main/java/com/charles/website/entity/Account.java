@@ -22,6 +22,6 @@ public class Account extends BaseDomain{
     private Role roles;
 
     @OneToOne
-    @JoinColumn(name = "student")
+    @JoinColumn(name = "student_id")
     private Student student;
 }

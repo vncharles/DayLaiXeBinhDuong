@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
--- Host: localhost    Database: driving-courses
+-- Host: localhost    Database: driving_courses
 -- ------------------------------------------------------
 -- Server version	8.0.31
 
@@ -31,12 +31,15 @@ CREATE TABLE `account` (
   `username` varchar(255) NOT NULL,
   `role_id` bigint DEFAULT NULL,
   `student` bigint DEFAULT NULL,
+  `student_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKd4vb66o896tay3yy52oqxr9w0` (`role_id`),
   KEY `FKkcjrimtl9afmy2aaf0o1joc6t` (`student`),
+  KEY `FKr46tvf8h6nnw1c93s9bxiv1t` (`student_id`),
   CONSTRAINT `FKd4vb66o896tay3yy52oqxr9w0` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `FKkcjrimtl9afmy2aaf0o1joc6t` FOREIGN KEY (`student`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  CONSTRAINT `FKkcjrimtl9afmy2aaf0o1joc6t` FOREIGN KEY (`student`) REFERENCES `student` (`id`),
+  CONSTRAINT `FKr46tvf8h6nnw1c93s9bxiv1t` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +48,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (1,'2023-06-04 11:51:24.638','2023-06-04 11:51:24.638',_binary '','$2a$10$rsP7yaQ.7zl9XjgoraZ9cOcqgdAv9aMaJKb3NhhLrdWYMIZiqQYbi','test',1,NULL,1);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +69,7 @@ CREATE TABLE `certificate` (
   KEY `FKknbfl2vklnrw009fdrpgo1axf` (`student_id`),
   CONSTRAINT `FK79tye2nsqmh8kipjbrj8sn4f5` FOREIGN KEY (`degree_id`) REFERENCES `degree` (`id`),
   CONSTRAINT `FKknbfl2vklnrw009fdrpgo1axf` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +97,7 @@ CREATE TABLE `contact` (
   `phone_number` varchar(255) NOT NULL,
   `status` bit(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +131,7 @@ CREATE TABLE `degree` (
   `study_time` double NOT NULL,
   `title` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +167,7 @@ CREATE TABLE `follow` (
   KEY `FKr13n4a5fu1f1utqjfjslp2e0b` (`student_id`),
   CONSTRAINT `FKpe1iox5ikrbivqbmel25vvm2r` FOREIGN KEY (`degree_id`) REFERENCES `degree` (`id`),
   CONSTRAINT `FKr13n4a5fu1f1utqjfjslp2e0b` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +192,7 @@ CREATE TABLE `intro` (
   `updated_date` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,7 +218,7 @@ CREATE TABLE `role` (
   `description` varchar(255) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,6 +227,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,NULL,NULL,NULL,'ROLE_USER'),(2,NULL,NULL,NULL,'ROLE_STAFF'),(3,NULL,NULL,NULL,'ROLE_ADMIN');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,7 +246,7 @@ CREATE TABLE `slide` (
   `image` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +255,6 @@ CREATE TABLE `slide` (
 
 LOCK TABLES `slide` WRITE;
 /*!40000 ALTER TABLE `slide` DISABLE KEYS */;
-INSERT INTO `slide` VALUES (1,NULL,NULL,'Test1','image1.png','test1'),(2,NULL,NULL,'Test2','image2.jpg','test2');
 /*!40000 ALTER TABLE `slide` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,7 +273,7 @@ CREATE TABLE `social_network` (
   `link` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;i;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +282,6 @@ CREATE TABLE `social_network` (
 
 LOCK TABLES `social_network` WRITE;
 /*!40000 ALTER TABLE `social_network` DISABLE KEYS */;
-INSERT INTO `social_network` VALUES (1,NULL,NULL,'Quốc Trọng','https://www.facebook.com/VN.Charles132/','Facebook'),(2,NULL,NULL,'Quốc Trọng','https://www.instagram.com/charles.qt1302/','Instagram');
 /*!40000 ALTER TABLE `social_network` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,8 +300,12 @@ CREATE TABLE `student` (
   `birthday` datetime DEFAULT NULL,
   `full_name` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `hibernate_lazy_initializer` tinyblob,
+  `account_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKoootcgotavmpat2yv9o52wx1q` (`account_id`),
+  CONSTRAINT `FKoootcgotavmpat2yv9o52wx1q` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -307,6 +314,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES (1,NULL,NULL,'TP HCM','2002-02-13 00:00:00','Tran Quoc Trong','0358880753',NULL,NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -319,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-02 23:17:41
+-- Dump completed on 2023-06-04 12:50:52
