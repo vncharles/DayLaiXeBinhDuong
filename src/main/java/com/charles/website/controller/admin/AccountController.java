@@ -6,7 +6,7 @@ import com.charles.website.model.response.RegisterResponse;
 import com.charles.website.model.request.LoginRequest;
 import com.charles.website.model.request.ResetPassRequest;
 import com.charles.website.model.response.UserResponse;
-import com.charles.website.services.UserService;
+import com.charles.website.services.AccountService;
 import com.charles.website.utils.Authen;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +23,20 @@ import javax.validation.Valid;
 @RequestMapping("/api/account")
 public class AccountController {
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Validated @RequestBody LoginRequest login) {
         String username = login.getUsername();
         String password = login.getPassword();
-        return ResponseEntity.ok(userService.loginAccount(username, password));
+        return ResponseEntity.ok(accountService.loginAccount(username, password));
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Validated @RequestBody RegisterResponse registerResponse,
                                           HttpServletRequest request) throws MessagingException {
 
-        userService.createAccount(registerResponse);
+        accountService.createAccount(registerResponse);
 
         return ResponseEntity.ok(new MessageResponse("Register success. "));
     }
@@ -72,7 +72,7 @@ public class AccountController {
     public ResponseEntity<?> infoDetail() {
         Authen.check();
 
-        Account account = userService.infoDetail();
+        Account account = accountService.infoDetail();
 
         return ResponseEntity.ok(new UserResponse(account));
     }

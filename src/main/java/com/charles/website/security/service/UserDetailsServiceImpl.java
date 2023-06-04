@@ -1,7 +1,7 @@
 package com.charles.website.security.service;
 
 import com.charles.website.entity.Account;
-import com.charles.website.repository.UserRepository;
+import com.charles.website.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    UserRepository userRepository;
+    AccountRepository accountRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = userRepository.findByUsername(username);
+        Account account = accountRepository.findByUsername(username);
 //                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
         if(account ==null) throw new UsernameNotFoundException("User Not Found with username: " + username);
         return UserDetailsImpl.build(account);
