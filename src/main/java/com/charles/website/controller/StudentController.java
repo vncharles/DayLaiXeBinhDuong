@@ -4,6 +4,8 @@ import com.charles.website.entity.Student;
 import com.charles.website.model.MessageResponse;
 import com.charles.website.services.StudentService;
 import com.charles.website.utils.Authen;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +19,9 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
+    })
     @GetMapping("/info-person")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> getInfoPerson() {
@@ -25,6 +30,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.seeInfoPerson());
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
+    })
     @PutMapping("/update-person")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> updateInfoPerson(@RequestBody Student request) {
@@ -35,6 +43,9 @@ public class StudentController {
         return ResponseEntity.ok(new MessageResponse("Update info person is success"));
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
+    })
     @PutMapping("/reset-person-password")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> resetPersonPassword(@RequestParam("password") String password) {

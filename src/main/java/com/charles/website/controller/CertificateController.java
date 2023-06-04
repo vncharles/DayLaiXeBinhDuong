@@ -3,6 +3,8 @@ package com.charles.website.controller;
 import com.charles.website.entity.Certificate;
 import com.charles.website.entity.Follow;
 import com.charles.website.services.CertificateService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +25,9 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
+    })
     @GetMapping("/list-person")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> listCertificatePerson(@RequestParam(defaultValue = "0") int page,
