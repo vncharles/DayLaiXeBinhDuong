@@ -10,4 +10,6 @@ import java.util.List;
 @Service
 public interface FollowService {
     Page<Follow> listFollowPerson(Pageable pageable);
+
+    Follow getFollowDetailPerson(Long studentId, Long degreeId);
 }

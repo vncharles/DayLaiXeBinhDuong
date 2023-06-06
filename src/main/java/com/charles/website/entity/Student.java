@@ -22,4 +22,7 @@ public class Student extends BaseDomain {
     private String address;
     private Date birthday;
 
+    public Student(Long studentId) {
+        super.setId(studentId);
+    }
 }

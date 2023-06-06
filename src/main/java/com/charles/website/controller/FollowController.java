@@ -3,6 +3,7 @@ package com.charles.website.controller;
 import com.charles.website.entity.Degree;
 import com.charles.website.entity.Follow;
 import com.charles.website.services.FollowService;
+import com.charles.website.utils.Authen;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,9 @@ public class FollowController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> listFollowPerson(@RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Authen.check();
 
+        Pageable pageable = PageRequest.of(page, size);
         Page<Follow> result = followService.listFollowPerson(pageable);
 
         Map<String, Object> response = new HashMap<>();
@@ -43,5 +45,17 @@ public class FollowController {
         response.put("totalPages", result.getTotalPages());
 
         return ResponseEntity.ok(response);
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
+    })
+    @GetMapping("/detail-person")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> detailFollowPerson(@RequestParam("student-id") Long studentId,
+                                              @RequestParam("degree-id") Long degreeId) {
+        Authen.check();
+
+        return ResponseEntity.ok(followService.getFollowDetailPerson(studentId, degreeId));
     }
 }

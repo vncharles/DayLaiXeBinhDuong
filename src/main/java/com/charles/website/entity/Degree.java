@@ -33,4 +33,7 @@ public class Degree extends BaseDomain {
     private int DAT;
     private String advantage;
 
+    public Degree(Long degreeId) {
+        super.setId(degreeId);
+    }
 }

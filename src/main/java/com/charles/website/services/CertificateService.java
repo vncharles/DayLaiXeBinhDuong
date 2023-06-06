@@ -10,4 +10,6 @@ import java.util.List;
 @Service
 public interface CertificateService {
     Page<Certificate> listCertificatePerson(Pageable pageable);
+
+    Certificate getCertificateDetailPerson(Long studentId, Long degreeId);
 }
