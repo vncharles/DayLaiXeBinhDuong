@@ -204,6 +204,7 @@ CREATE TABLE `intro` (
 
 LOCK TABLES `intro` WRITE;
 /*!40000 ALTER TABLE `intro` DISABLE KEYS */;
+INSERT INTO `intro` VALUES (1,NULL,NULL,'niPkap1ozUA');
 /*!40000 ALTER TABLE `intro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,6 +259,7 @@ CREATE TABLE `slide` (
 
 LOCK TABLES `slide` WRITE;
 /*!40000 ALTER TABLE `slide` DISABLE KEYS */;
+INSERT INTO `slide` VALUES (1,NULL,NULL,'My is test 1','image1.png','test1'),(2,NULL,NULL,'My is test 2','image2.jpg','test2');
 /*!40000 ALTER TABLE `slide` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,6 +287,7 @@ CREATE TABLE `social_network` (
 
 LOCK TABLES `social_network` WRITE;
 /*!40000 ALTER TABLE `social_network` DISABLE KEYS */;
+INSERT INTO `social_network` VALUES (1,NULL,NULL,'Facebook Quốc Trọng','VN.Charles132','Facebook'),(2,NULL,NULL,'Instagram Phạm Đức Nhân','Nhan7tuoi','Instagram');
 /*!40000 ALTER TABLE `social_network` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-04 15:40:59
+-- Dump completed on 2023-06-07 12:49:36
