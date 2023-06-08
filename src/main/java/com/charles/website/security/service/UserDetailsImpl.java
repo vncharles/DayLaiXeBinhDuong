@@ -3,6 +3,7 @@ package com.charles.website.security.service;
 import java.util.*;
 
 import com.charles.website.entity.Account;
+import com.charles.website.entity.Student;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +18,7 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
     private String username;
     private boolean active;
+    private Student student;
 
     @JsonIgnore
     private String password;
@@ -24,12 +26,13 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Long id, String username, String password, boolean active,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities, Student student) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
         this.active = active;
+        this.student = student;
     }
 
     public static UserDetailsImpl build(Account account) {
@@ -40,7 +43,8 @@ public class UserDetailsImpl implements UserDetails {
                 account.getUsername(),
                 account.getPassword(),
                 account.isActive(),
-                authorities);
+                authorities,
+                account.getStudent());
     }
 
     @Override

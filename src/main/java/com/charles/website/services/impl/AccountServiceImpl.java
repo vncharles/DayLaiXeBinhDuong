@@ -103,7 +103,8 @@ public class AccountServiceImpl implements AccountService {
             return new JwtResponse(jwt,
                     userDetails.getId(),
                     userDetails.getUsername(),
-                    roles);
+                    roles,
+                    userDetails.getStudent());
         } catch (Exception ex){
             throw new BadRequestException(1102, "wrong password");
         }
