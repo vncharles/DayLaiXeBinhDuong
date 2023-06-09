@@ -1,56 +1,56 @@
-package com.charles.website.controller;
+package com.charles.website.controller.admin;
 
-import com.charles.website.entity.Student;
 import com.charles.website.model.MessageResponse;
-import com.charles.website.model.request.StudentRequest;
-import com.charles.website.services.StudentService;
+import com.charles.website.services.IntroService;
 import com.charles.website.utils.Authen;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/student")
-public class StudentController {
+@RequestMapping("/api/admin/intro")
+public class AdminIntroController {
     @Autowired
-    private StudentService studentService;
+    private IntroService introService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
-    @GetMapping("/info-person")
-    public ResponseEntity<?> getInfoPerson() {
+    @PostMapping("/create")
+    public ResponseEntity<?> create(@RequestParam("link")String link) {
         Authen.check();
 
-        return ResponseEntity.ok(studentService.seeInfoPerson());
+        introService.add(link);
+
+        return ResponseEntity.ok(new MessageResponse("Create intro is success"));
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
-    @PutMapping("/update-person")
-    public ResponseEntity<?> updateInfoPerson(@RequestBody StudentRequest request) {
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestParam("id")Long id,
+                                    @Nullable @RequestParam("link")String link) {
         Authen.check();
 
-        studentService.updateInfoPerson(request);
+        introService.update(id, link);
 
-        return ResponseEntity.ok(new MessageResponse("Update info person is success"));
+        return ResponseEntity.ok(new MessageResponse("Update intro is success"));
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
-    @PutMapping("/reset-person-password")
-    public ResponseEntity<?> resetPersonPassword(@RequestParam("password") String password) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id")Long id) {
         Authen.check();
 
-        studentService.updatePasswordPerson(password);
+        introService.delete(id);
 
-        return ResponseEntity.ok(new MessageResponse("Update password person is success"));
+        return ResponseEntity.ok(new MessageResponse("Delete info is success"));
     }
 }

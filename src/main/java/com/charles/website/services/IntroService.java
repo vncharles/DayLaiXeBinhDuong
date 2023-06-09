@@ -10,4 +10,10 @@ public interface IntroService {
     List<Intro> getListIntro();
 
     Intro getDetailIntro(Long id);
+
+    void add(String link);
+
+    void update(Long id, String link);
+
+    void delete(Long id);
 }

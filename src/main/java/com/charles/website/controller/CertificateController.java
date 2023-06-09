@@ -30,7 +30,6 @@ public class CertificateController {
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
     @GetMapping("/list-person")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> listCertificatePerson(@RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -50,7 +49,6 @@ public class CertificateController {
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
     @GetMapping("/detail-person")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?>  detailCertificatePerson(@RequestParam("student-id") Long studentId,
                                                         @RequestParam("degree-id") Long degreeId) {
         Authen.check();

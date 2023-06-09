@@ -30,7 +30,6 @@ public class FollowController {
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
     @GetMapping("/list-person")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> listFollowPerson(@RequestParam(defaultValue = "0") int page,
                                               @RequestParam(defaultValue = "10") int size) {
         Authen.check();
@@ -51,7 +50,6 @@ public class FollowController {
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
     @GetMapping("/detail-person")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> detailFollowPerson(@RequestParam("student-id") Long studentId,
                                               @RequestParam("degree-id") Long degreeId) {
         Authen.check();

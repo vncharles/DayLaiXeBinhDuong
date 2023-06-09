@@ -2,6 +2,7 @@ package com.charles.website.services.impl;
 
 import com.charles.website.entity.Account;
 import com.charles.website.entity.Student;
+import com.charles.website.model.request.StudentRequest;
 import com.charles.website.repository.AccountRepository;
 import com.charles.website.repository.StudentRepository;
 import com.charles.website.services.StudentService;
@@ -28,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void updateInfoPerson(Student req) {
+    public void updateInfoPerson(StudentRequest req) {
         Student student = accountRepository.findByUsername(Authen.username()).getStudent();
 
         if(req.getFullName()!=null) student.setFullName(req.getFullName());
