@@ -1,6 +1,7 @@
 package com.charles.website.services;
 
 import com.charles.website.entity.Account;
+import com.charles.website.model.request.AccountUpdateRequest;
 import com.charles.website.model.request.RegisterRequest;
 import com.charles.website.model.response.JwtResponse;
 import com.charles.website.model.response.UserResponse;
@@ -18,7 +19,7 @@ public interface AccountService {
 
     void createAccount(RegisterRequest registerRequest);
 
-    void updatePassword(Long id, Long studentId, String password);
+    void update(Long id, AccountUpdateRequest request);
 
     void deactive(Long id);
 

@@ -44,7 +44,7 @@ public class SlideServiceImpl implements SlideService {
 
     @Override
     public byte[] getSlideImage(String imageName) throws IOException {
-        return FileUtils.readFileToByteArray(new File("src/main/resources/images/slide/" + imageName));
+        return FileUtils.readFileToByteArray(new File("images/" + imageName));
     }
 
     @Override
@@ -90,8 +90,10 @@ public class SlideServiceImpl implements SlideService {
         String originalFilename = image.getOriginalFilename();
         String extension = StringUtils.getFilenameExtension(originalFilename);
         String imageName = UUID.randomUUID().toString() + "." + extension;
-        File file = new File("src/main/resources/images/slide/" + imageName);
+
+        File file = new File("images/" + imageName);
         FileUtils.writeByteArrayToFile(file, image.getBytes());
+
         return imageName;
     }
 }

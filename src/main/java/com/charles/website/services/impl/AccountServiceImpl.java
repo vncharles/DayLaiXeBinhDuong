@@ -6,6 +6,7 @@ import com.charles.website.entity.Account;
 import com.charles.website.entity.Student;
 import com.charles.website.exception.BadRequestException;
 import com.charles.website.exception.NotFoundException;
+import com.charles.website.model.request.AccountUpdateRequest;
 import com.charles.website.model.request.RegisterRequest;
 import com.charles.website.model.response.JwtResponse;
 import com.charles.website.model.response.UserResponse;
@@ -108,7 +109,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updatePassword(Long id, Long studentId, String password) {
+    public void update(Long id, AccountUpdateRequest request) {
         Account account = accountRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException(404, "Account is not found");
         });
@@ -119,17 +120,16 @@ public class AccountServiceImpl implements AccountService {
                         account.getRoles().getName().equals(ERole.ROLE_STAFF)))
             throw new BadRequestException(400, "No permission to change password admin or staff other");
 
-        if(studentId!=null) {
-            Student student = studentRepository.findById(studentId).orElseThrow(() -> {
+        if(request.getStudentId()!=null) {
+            Student student = studentRepository.findById(request.getStudentId()).orElseThrow(() -> {
                 throw new NotFoundException(404, "Student is not found!");
             });
             account.setStudent(student);
         }
 
-        if(password!=null) account.setPassword(encoder.encode(password));
+        if(request.getPassword()!=null) account.setPassword(encoder.encode(request.getPassword()));
 
         accountRepository.save(account);
-
     }
 
     @Override

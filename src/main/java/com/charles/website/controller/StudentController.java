@@ -1,6 +1,5 @@
 package com.charles.website.controller;
 
-import com.charles.website.entity.Student;
 import com.charles.website.model.MessageResponse;
 import com.charles.website.model.request.StudentRequest;
 import com.charles.website.services.StudentService;
@@ -9,10 +8,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/student")

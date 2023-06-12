@@ -1,5 +1,6 @@
 package com.charles.website.entity;
 
+import com.charles.website.model.request.StudentRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,12 @@ public class Student extends BaseDomain {
 
     public Student(Long studentId) {
         super.setId(studentId);
+    }
+
+    public Student(StudentRequest request) {
+        this.setFullName(request.getFullName());
+        this.setPhoneNumber(request.getPhoneNumber());
+        this.setAddress(request.getAddress());
+        this.setBirthday(request.getBirthday());
     }
 }

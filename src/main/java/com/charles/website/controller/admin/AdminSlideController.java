@@ -25,11 +25,14 @@ public class AdminSlideController {
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
     @PostMapping(value = "/create", headers = { "content-type=multipart/mixed", "content-type=multipart/form-data" })
-    public ResponseEntity<?> createProduct(@RequestParam("data") String data,
-                                           @Nullable @RequestParam("image") MultipartFile image) throws IOException {
+    public ResponseEntity<?> create(@RequestParam(value = "data", required = false) String data,
+                                           @RequestParam("image") MultipartFile image) throws IOException {
         Authen.check();
-        ObjectMapper mapper = new ObjectMapper();
-        SlideRequest req = mapper.readValue(data, SlideRequest.class);
+        SlideRequest req = new SlideRequest();
+        if(data!=null) {
+            ObjectMapper mapper = new ObjectMapper();
+            req = mapper.readValue(data, SlideRequest.class);
+        }
 
         slideService.create(req, image);
         return ResponseEntity.ok(new MessageResponse("create slide is success"));
@@ -39,7 +42,7 @@ public class AdminSlideController {
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
     @PostMapping(value = "/update", headers = { "content-type=multipart/mixed", "content-type=multipart/form-data" })
-    public ResponseEntity<?> updateProduct(@RequestParam("id") Long id,
+    public ResponseEntity<?> update(@RequestParam("id") Long id,
                                            @RequestParam(value = "data", required = false) String data,
                                            @RequestParam(value = "image", required = false) MultipartFile image ) throws IOException {
         Authen.check();
@@ -47,7 +50,7 @@ public class AdminSlideController {
         if(data!=null) {
             ObjectMapper mapper = new ObjectMapper();
             req = mapper.readValue(data, SlideRequest.class);
-        }
+        } else req = new SlideRequest();
         slideService.update(id, req, image);
         return ResponseEntity.ok(new MessageResponse("Update slide is success"));
     }

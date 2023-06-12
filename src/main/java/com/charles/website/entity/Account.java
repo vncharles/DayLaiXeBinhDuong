@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity @Data @AllArgsConstructor @NoArgsConstructor
 public class Account extends BaseDomain{
 
-    @Column(updatable = false, nullable = false)
+    @Column(nullable = false)
     private String username;
 
     @NotNull
