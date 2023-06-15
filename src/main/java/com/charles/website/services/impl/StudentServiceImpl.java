@@ -42,12 +42,6 @@ public class StudentServiceImpl implements StudentService {
         Student student = accountRepository.findByUsername(Authen.username()).getStudent();
 
         if(req.getFullName()!=null) student.setFullName(req.getFullName());
-        if(req.getPhoneNumber()!=null) {
-            if(!req.getPhoneNumber().matches("^(09|03|07|08|05)\\d{8}$"))
-                throw new BadRequestException(400, "Please input phone number format exactly Vietnam");
-
-            student.setPhoneNumber(req.getPhoneNumber());
-        }
         if(req.getAddress()!=null) student.setAddress(req.getAddress());
         if(req.getBirthday()!=null) student.setBirthday(req.getBirthday());
 
@@ -123,13 +117,13 @@ public class StudentServiceImpl implements StudentService {
                 throw new BadRequestException(400, "Number phone is exist!");
 
             student.setPhoneNumber(request.getPhoneNumber());
+
+            Account account = accountRepository.findByStudent(student);
+            account.setUsername(student.getPhoneNumber());
+            account.setPassword(encoder.encode(student.getPhoneNumber()));
+            accountRepository.save(account);
         }
         studentRepository.save(student);
-
-        Account account = accountRepository.findByStudent(student);
-        account.setUsername(student.getPhoneNumber());
-        account.setPassword(encoder.encode(student.getPhoneNumber()));
-        accountRepository.save(account);
     }
 
     @Override
