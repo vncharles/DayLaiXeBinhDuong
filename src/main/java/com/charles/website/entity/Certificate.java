@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -16,9 +17,14 @@ public class Certificate {
     @EmbeddedId
     private StudentDegreeID id;
 
-    private Date finishDay;
-    private int totalKmDAT;
+    private LocalDate finishDay;
     private double totalHoursRunning;
+    private int kmDAT;
+    private double theotyTestScore;
+    private double simulatedTestScore;
     private boolean status;
 
+    public Certificate(StudentDegreeID id) {
+        this.id = id;
+    }
 }

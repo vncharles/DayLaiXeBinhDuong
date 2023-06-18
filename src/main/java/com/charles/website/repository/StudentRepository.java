@@ -11,7 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    @Query(nativeQuery = true, value = "select * from student where full_name like '%?1%' or phone_number like '%?1%'")
+    @Query(nativeQuery = true, value = "select * from student where full_name like %?1% or phone_number like %?1%",
+            countQuery = "select COUNT(*) from student where full_name like %?1% or phone_number like %?1%")
     Page<Student> findAllByFilter(String filter, Pageable pageable);
 
     boolean existsByPhoneNumber(String phone);

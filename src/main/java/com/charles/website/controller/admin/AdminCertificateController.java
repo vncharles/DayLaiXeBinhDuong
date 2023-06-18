@@ -1,11 +1,9 @@
 package com.charles.website.controller.admin;
 
-import com.charles.website.entity.Contact;
+import com.charles.website.entity.Certificate;
 import com.charles.website.entity.Follow;
 import com.charles.website.model.MessageResponse;
-import com.charles.website.model.request.FollowRequest;
-import com.charles.website.model.request.IncreaseHoursRequest;
-import com.charles.website.services.FollowService;
+import com.charles.website.services.CertificateService;
 import com.charles.website.utils.Authen;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,22 +18,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/admin/follow")
-public class AdminFollowController {
+@RequestMapping("/api/admin")
+public class AdminCertificateController {
     @Autowired
-    private FollowService followService;
+    private CertificateService certificateService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
     @GetMapping("")
-    public ResponseEntity<?> getAll(@RequestParam(value = "filter", defaultValue = "")String filter,
+    public ResponseEntity<?> getAll(@RequestParam(value = "filter", required = false, defaultValue = "")String filter,
                                     @RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size) {
         Authen.check();
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Follow> result = followService.getAll(filter, pageable);
+        Page<Certificate> result = certificateService.getAll(filter, pageable);
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", result.getContent());
@@ -57,7 +55,7 @@ public class AdminFollowController {
         Authen.check();
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Follow> result = followService.getAllByDegree(degreeId, filter, pageable);
+        Page<Certificate> result = certificateService.getAllByDegree(degreeId, filter, pageable);
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", result.getContent());
@@ -76,35 +74,35 @@ public class AdminFollowController {
                                        @RequestParam("degree-id")Long degreeId) {
         Authen.check();
 
-        Follow follow = followService.getDetail(studentId, degreeId);
+        Certificate certificate = certificateService.getDetail(studentId, degreeId);
 
-        return ResponseEntity.ok(follow);
+        return ResponseEntity.ok(certificate);
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody FollowRequest request) {
+    public ResponseEntity<?> create(@RequestParam("student-id")Long studentId,
+                                       @RequestParam("degree-id")Long degreeId) {
         Authen.check();
 
-        followService.create(request);
+        certificateService.create(studentId, degreeId);
 
-        return ResponseEntity.ok(new MessageResponse("Create follow is success"));
+        return ResponseEntity.ok(new MessageResponse("Create certificate is success"));
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
     })
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestParam("student-id")Long studentId,
-                                    @RequestParam("degree-id")Long degreeId,
-                                    @RequestBody FollowRequest request) {
+    @PutMapping("/destatus")
+    public ResponseEntity<?> deStatus(@RequestParam("student-id")Long studentId,
+                                    @RequestParam("degree-id")Long degreeId) {
         Authen.check();
 
-        followService.update(studentId, degreeId, request);
+        certificateService.destatus(studentId, degreeId);
 
-        return ResponseEntity.ok(new MessageResponse("Update follow is success"));
+        return ResponseEntity.ok(new MessageResponse("De status certificate is success"));
     }
 
     @ApiImplicitParams({
@@ -115,22 +113,8 @@ public class AdminFollowController {
                                     @RequestParam("degree-id")Long degreeId) {
         Authen.check();
 
-        followService.delete(studentId, degreeId);
+        certificateService.delete(studentId, degreeId);
 
-        return ResponseEntity.ok(new MessageResponse("Delete follow is success"));
-    }
-
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header", defaultValue = "Bearer ")
-    })
-    @PostMapping("/increase-hours")
-    public ResponseEntity<?> increaseHours(@RequestParam("student-id")Long studentId,
-                                           @RequestParam("degree-id")Long degreeId,
-                                           @RequestBody IncreaseHoursRequest request) {
-        Authen.check();
-
-        followService.increaseHours(studentId, degreeId, request);
-
-        return ResponseEntity.ok(new MessageResponse("Increase hours on follow is success"));
+        return ResponseEntity.ok(new MessageResponse("Delete certificate is success"));
     }
 }

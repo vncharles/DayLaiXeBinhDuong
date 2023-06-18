@@ -60,14 +60,12 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public Page<Follow> getAll(String filter, Pageable pageable) {
-        if(filter==null) return followRepository.findAll(pageable);
-
-        return followRepository.findAllByFilter(filter, pageable);
+        return followRepository.findAllFilter(filter, pageable);
     }
 
     @Override
-    public Page<Follow> getAllByDegree(Long degreeId, Pageable pageable) {
-        return followRepository.findAllByDegree(degreeId, pageable);
+    public Page<Follow> getAllByDegree(Long degreeId, String filter, Pageable pageable) {
+        return followRepository.findAllByDegreeFilter(degreeId, filter, pageable);
     }
 
     @Override

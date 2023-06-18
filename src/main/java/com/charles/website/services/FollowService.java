@@ -17,7 +17,7 @@ public interface FollowService {
 
     Page<Follow> getAll(String filter, Pageable pageable);
 
-    Page<Follow> getAllByDegree(Long degreeId, Pageable pageable);
+    Page<Follow> getAllByDegree(Long degreeId, String filter, Pageable pageable);
 
     Follow getDetail(Long studentId, Long degreeId);
 
