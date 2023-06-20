@@ -8,16 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class SocialNetwork extends BaseDomain {
-
+@Entity @Data @AllArgsConstructor @NoArgsConstructor
+public class Document extends BaseDomain{
     @NotNull
     private String title;
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
+    @NotNull
+    private String image;
+    @NotNull
     private String link;
-
 }

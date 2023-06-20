@@ -1,15 +1,10 @@
 package com.charles.website.services.impl;
 
-import com.charles.website.entity.Account;
-import com.charles.website.entity.ERole;
-import com.charles.website.entity.Role;
-import com.charles.website.entity.Student;
+import com.charles.website.entity.*;
 import com.charles.website.exception.BadRequestException;
 import com.charles.website.exception.NotFoundException;
 import com.charles.website.model.request.StudentRequest;
-import com.charles.website.repository.AccountRepository;
-import com.charles.website.repository.RoleRepository;
-import com.charles.website.repository.StudentRepository;
+import com.charles.website.repository.*;
 import com.charles.website.services.StudentService;
 import com.charles.website.utils.Authen;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -31,6 +28,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private FollowRepository followRepository;
+
+    @Autowired
+    private CertificateRepository certificateRepository;
 
     @Override
     public Student seeInfoPerson() {
@@ -142,6 +145,12 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException(404, "Student is not found!");
         });
+
+        List<Follow> followList = followRepository.findAllById_Student(student);
+        followRepository.deleteAll(followList);
+
+        List<Certificate> certificates = certificateRepository.findAllById_Student(student);
+        certificateRepository.deleteAll(certificates);
 
         Account account = accountRepository.findByStudent(student);
         accountRepository.delete(account);

@@ -1,19 +1,31 @@
 package com.charles.website.services.impl;
 
+import com.charles.website.entity.Certificate;
 import com.charles.website.entity.Degree;
+import com.charles.website.entity.Follow;
 import com.charles.website.exception.BadRequestException;
 import com.charles.website.model.request.DegreeRequest;
+import com.charles.website.repository.CertificateRepository;
 import com.charles.website.repository.DegreeRepository;
+import com.charles.website.repository.FollowRepository;
 import com.charles.website.services.DegreeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DegreeServiceImpl implements DegreeService {
     @Autowired
     private DegreeRepository degreeRepository;
+
+    @Autowired
+    private FollowRepository followRepository;
+
+    @Autowired
+    private CertificateRepository certificateRepository;
 
     @Override
     public Page<Degree> getListDegree(Pageable pageable) {
@@ -66,6 +78,12 @@ public class DegreeServiceImpl implements DegreeService {
         Degree degree = degreeRepository.findById(id).orElseThrow(() -> {
             throw new BadRequestException(400, "Degree is not found!");
         });
+
+        List<Follow> followList = followRepository.findAllById_Degree(degree);
+        followRepository.deleteAll(followList);
+
+        List<Certificate> certificates = certificateRepository.findAllById_Degree(degree);
+        certificateRepository.deleteAll(certificates);
 
         degreeRepository.delete(degree);
     }

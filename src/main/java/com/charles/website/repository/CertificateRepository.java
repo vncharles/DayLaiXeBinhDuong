@@ -1,9 +1,6 @@
 package com.charles.website.repository;
 
-import com.charles.website.entity.Certificate;
-import com.charles.website.entity.Degree;
-import com.charles.website.entity.Follow;
-import com.charles.website.entity.StudentDegreeID;
+import com.charles.website.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +12,10 @@ import java.util.List;
 @Repository
 public interface CertificateRepository extends JpaRepository<Certificate, StudentDegreeID> {
     boolean existsById(StudentDegreeID id);
+
+    List<Certificate> findAllById_Student(Student student);
+
+    List<Certificate> findAllById_Degree(Degree degree);
 
     @Query(nativeQuery = true,
             value = "select * from certificate where student_id=?1",

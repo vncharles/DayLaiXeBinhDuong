@@ -1,7 +1,6 @@
 package com.charles.website.repository;
 
-import com.charles.website.entity.Follow;
-import com.charles.website.entity.StudentDegreeID;
+import com.charles.website.entity.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +16,10 @@ public interface FollowRepository extends JpaRepository<Follow, StudentDegreeID>
             value = "select * from follow where student_id=?1",
             countQuery = "select COUNT(*) from follow where student_id=?1")
     Page<Follow> findAllByStudent(Long studentId, Pageable pageable);
+
+    List<Follow> findAllById_Student(Student student);
+
+    List<Follow> findAllById_Degree(Degree degree);
 
     @Query(nativeQuery = true,
             value = "SELECT f.* from follow f " +

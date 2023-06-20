@@ -6,18 +6,15 @@ import com.charles.website.exception.NotFoundException;
 import com.charles.website.model.request.SlideRequest;
 import com.charles.website.repository.SlideRepository;
 import com.charles.website.services.SlideService;
+import com.charles.website.utils.ImageService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class SlideServiceImpl implements SlideService {
@@ -44,7 +41,7 @@ public class SlideServiceImpl implements SlideService {
 
     @Override
     public byte[] getSlideImage(String imageName) throws IOException {
-        return FileUtils.readFileToByteArray(new File("images/" + imageName));
+        return ImageService.getImage("images/slide/" + imageName);
     }
 
     @Override
@@ -55,7 +52,7 @@ public class SlideServiceImpl implements SlideService {
         Slide slide = new Slide();
         slide.setTitle(request.getTitle());
         slide.setDescription(request.getDescription());
-        String imageName = saveImage(image);
+        String imageName = ImageService.saveImage("images/slide/", image);
         slide.setImage(imageName);
 
         slideRepository.save(slide);
@@ -70,7 +67,8 @@ public class SlideServiceImpl implements SlideService {
         if(req.getTitle()!=null) slide.setTitle(req.getTitle());
         if(req.getDescription()!=null) slide.setDescription(req.getDescription());
         if(image!=null) {
-            String imageUrl = saveImage(image);
+            ImageService.FileRemover("images/slide/" + slide.getImage());
+            String imageUrl = ImageService.saveImage("images/slide/", image);
             slide.setImage(imageUrl);
         }
 
@@ -83,17 +81,7 @@ public class SlideServiceImpl implements SlideService {
             throw new NotFoundException(404, "Slide is not found!");
         });
 
+        ImageService.FileRemover("images/slide/" + slide.getImage());
         slideRepository.delete(slide);
-    }
-
-    private String saveImage(MultipartFile image) throws IOException {
-        String originalFilename = image.getOriginalFilename();
-        String extension = StringUtils.getFilenameExtension(originalFilename);
-        String imageName = UUID.randomUUID().toString() + "." + extension;
-
-        File file = new File("images/" + imageName);
-        FileUtils.writeByteArrayToFile(file, image.getBytes());
-
-        return imageName;
     }
 }
