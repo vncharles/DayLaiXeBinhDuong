@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public interface AccountService {
-    Page<Account> getListUser(Pageable pageable);
+    Page<Account> getListUser(String filter, Pageable pageable);
 
     Account getDetailAccout(Long id);
 

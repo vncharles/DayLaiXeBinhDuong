@@ -36,11 +36,12 @@ public class AdminAccountController {
     })
     @GetMapping("")
     public ResponseEntity<?> listAll(@RequestParam(defaultValue = "0") int page,
-                                              @RequestParam(defaultValue = "10") int size) {
+                                              @RequestParam(defaultValue = "10") int size,
+                                     @RequestParam(value = "filter", required = false)String filter) {
         Authen.check();
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Account> result = accountService.getListUser(pageable);
+        Page<Account> result = accountService.getListUser(filter, pageable);
 
         List<AccountResponse> list = result.getContent().stream().map(account -> new AccountResponse(account)).collect(Collectors.toList());
 

@@ -29,11 +29,12 @@ public class AdminContactController {
     @GetMapping("")
     public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
-                                    @RequestParam(value = "status", required = false)Boolean status) {
+                                    @RequestParam(value = "status", required = false) Boolean status,
+                                    @RequestParam(value = "filter", required = false, defaultValue = "")String filter) {
         Authen.check();
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Contact> result = contactService.getAll(pageable, status);
+        Page<Contact> result = contactService.getAll(status, filter, pageable);
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", result.getContent());

@@ -35,11 +35,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Page<Contact> getAll(Pageable pageable, Boolean status) {
+    public Page<Contact> getAll(Boolean status, String filter, Pageable pageable) {
         Page<Contact> result = null;
         if(status!=null) {
-            result = contactRepository.findAllByStatusQuery(status, pageable);
-        } else result = contactRepository.findAllQuery(pageable);
+            result = contactRepository.findAllByStatusQuery(filter, status, pageable);
+        } else result = contactRepository.findAllQuery(filter, pageable);
 
         return result;
     }

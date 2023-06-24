@@ -32,14 +32,17 @@ public class Follow {
     public Follow(StudentDegreeID id, FollowRequest request) {
         this.id = id;
         this.course = request.getCourse();
-        this.hoursRunningDAT = request.getHoursRunningDAT();
-        this.nightRunningHours = request.getNightRunningHours();
-        this.automaticRunningHours = request.getAutomaticRunningHours();
-        this.kmDAT = request.getKmDAT();
-        this.theotyTestScore = request.getTheotyTestScore();
-        this.simulatedTestScore = request.getSimulatedTestScore();
+        this.hoursRunningDAT = 0;
+        this.nightRunningHours = 0;
+        this.automaticRunningHours = 0;
+        this.kmDAT = 0;
+        if(request.getTheotyTestScore()!=null)
+            this.theotyTestScore = request.getTheotyTestScore();
+        if(request.getSimulatedTestScore()!=null)
+            this.simulatedTestScore = request.getSimulatedTestScore();
         this.teacher = request.getTeacher();
-        this.note = request.getNote();
+        if(request.getNote()!=null)
+            this.note = request.getNote();
     }
 
     public void increaseHoursRunningDAT(double value) {
@@ -52,5 +55,9 @@ public class Follow {
 
     public void increaseAutomaticRunningHours(double value) {
         automaticRunningHours = automaticRunningHours + value;
+    }
+
+    public void increaseKmDAT(int value) {
+        kmDAT = kmDAT + value;
     }
 }

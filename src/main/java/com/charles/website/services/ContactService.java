@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public interface ContactService {
     void createContact(ContactRequest contact);
 
-    Page<Contact> getAll(Pageable pageable, Boolean status);
+    Page<Contact> getAll(Boolean status, String filter, Pageable pageable);
 
     Contact getDetail(Long id);
 

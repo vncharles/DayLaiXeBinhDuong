@@ -51,8 +51,10 @@ public class AccountServiceImpl implements AccountService {
     private StudentRepository studentRepository;
 
     @Override
-    public Page<Account> getListUser(Pageable pageable) {
-        return accountRepository.findAll(pageable);
+    public Page<Account> getListUser(String filter, Pageable pageable) {
+        if(filter==null) return accountRepository.findAll(pageable);
+
+        return accountRepository.findAllByUsernameIsContaining(filter, pageable);
     }
 
     @Override

@@ -148,6 +148,7 @@ public class FollowServiceImpl implements FollowService {
         if(request.getCategory().equalsIgnoreCase("dat")) follow.increaseHoursRunningDAT(request.getValue());
         if(request.getCategory().equalsIgnoreCase("night")) follow.increaseNightRunningHours(request.getValue());
         if(request.getCategory().equalsIgnoreCase("automatic")) follow.increaseAutomaticRunningHours(request.getValue());
+        if(request.getCategory().equalsIgnoreCase("km")) follow.increaseKmDAT(request.getValue().intValue());
 
         followRepository.save(follow);
     }
